@@ -60,10 +60,29 @@ class List extends Component {
       case "companies":
       case "comps":
         return (
-          <div>
-            <h1>Companies</h1>
-          </div>
+          <Container>
+            <Row>
+              <Col>
+                <Wrapper>
+                  {companies.map(({ companyID, createdAt, name }) => (
+                    <Card
+                      key={companyID}
+                      type="comp"
+                      companyID={companyID}
+                      createdAt={createdAt}
+                      name={name}
+                    />
+                  ))}
+
+                  <Card type="addCompany" />
+                </Wrapper>
+              </Col>
+            </Row>
+          </Container>
         );
+
+      default:
+        return null;
     }
   }
 }
@@ -71,6 +90,7 @@ class List extends Component {
 // Styled components
 const Wrapper = styled.div`
   width: 100%;
+  margin: 0 auto;
 `;
 
 export default List;

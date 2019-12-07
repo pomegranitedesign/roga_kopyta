@@ -41,6 +41,10 @@ const Wrapper = styled.header`
   height: 80px;
   background: #2f3542;
   color: #ffffff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
 `;
 
 export default Header;

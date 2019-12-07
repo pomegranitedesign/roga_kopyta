@@ -28,5 +28,5 @@ app.use("/api/companies", companiesRouter);
 
 // Запускаем сервер
 app.listen(port, _ =>
-  console.log(chalk.yellow.bold(`Server is running on port: ${port}`))
+  console.log(chalk.yellow.bold(`\nServer is running on port: ${port}`))
 );

@@ -25,7 +25,7 @@ const Wrapper = styled.footer`
   font-weight: 400;
   font-size: 14px;
   left: 0;
-  position: relative;
+  position: fixed;
   margin-top: 40px;
 `;
 
