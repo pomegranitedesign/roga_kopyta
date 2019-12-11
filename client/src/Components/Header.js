@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { Container, Row, Col } from "react-grid-system";
 
 import Navigation from "./Navigation";
+import Search from "./Search";
 
-const Header = _ => {
+const Header = ({ handleSearch, handleChange, search }) => {
   return (
     <Wrapper>
       <Container
@@ -25,6 +26,14 @@ const Header = _ => {
         >
           <Col>
             <h1>Рога и Копыта</h1>
+          </Col>
+
+          <Col>
+            <Search
+              handleSearch={handleSearch}
+              handleChange={handleChange}
+              search={search}
+            />
           </Col>
 
           <Col>

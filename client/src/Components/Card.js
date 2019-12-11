@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-import addCompanyIcon from "../Assets/Images/addCompany.svg";
+import addIcon from "../Assets/Images/addCompany.svg";
 
 class Card extends Component {
   state = {
@@ -65,6 +65,30 @@ class Card extends Component {
     this.exitEdit();
   };
 
+  handleAddRepresentative = e => {
+    e.preventDefault();
+
+    const { firstName, lastName, companyID } = this.state;
+    const allEntered = firstName && lastName && companyID;
+    if (allEntered) {
+      axios
+        .post("http://localhost:5000/api/representatives", {
+          firstName,
+          lastName,
+          companyId: companyID
+        })
+        .then(_ => {
+          console.log(`Adding a new representative [Success]`);
+          window.location.reload(false);
+        })
+        .catch(err =>
+          console.error(`Adding a new representative [Error]: ${err}`)
+        );
+
+      this.exitEdit();
+    }
+  };
+
   render() {
     const { type, createdAt } = this.props;
     const {
@@ -124,6 +148,64 @@ class Card extends Component {
               <Edit onClick={editing ? this.exitEdit : this.toggleEdit}>
                 {editingText}
               </Edit>
+            </Body>
+          </Wrapper>
+        );
+      case "addRepresentative":
+      case "addrepresentative":
+      case "addrep":
+      case "addRep":
+        return (
+          <Wrapper
+            onSubmit={e => this.handleAddRepresentative(e)}
+            action="http://localhost:5000/api/representatives"
+            method="post"
+            type="company"
+            acceptCharset="UTF-8"
+          >
+            <Name topBg="#3742FA">
+              {editing ? name : "Добавить Представителя"}
+            </Name>
+            <Body style={{ textAlign: "center" }}>
+              {editing ? (
+                <Fragment>
+                  <NameInput
+                    type="text"
+                    name="firstName"
+                    value={firstName}
+                    placeholder="Имя"
+                    onChange={this.handleEdit}
+                  />
+                  <NameInput
+                    type="text"
+                    name="lastName"
+                    value={lastName}
+                    placeholder="Фамилия"
+                    onChange={this.handleEdit}
+                  />
+                  <NameInput
+                    type="number"
+                    name="companyID"
+                    value={companyID}
+                    placeholder="ID компании"
+                    onChange={this.handleEdit}
+                  />
+
+                  <SaveButton
+                    type="submit"
+                    onClick={e => this.handleAddRepresentative(e)}
+                  >
+                    Добавить Представителя
+                  </SaveButton>
+                </Fragment>
+              ) : (
+                <AddIcon
+                  height={50}
+                  src={addIcon}
+                  alt="Add Company Icon"
+                  onClick={this.toggleEdit}
+                />
+              )}
             </Body>
           </Wrapper>
         );
@@ -207,9 +289,9 @@ class Card extends Component {
                   </SaveButton>
                 </Fragment>
               ) : (
-                <AddCompanyIcon
+                <AddIcon
                   height={50}
-                  src={addCompanyIcon}
+                  src={addIcon}
                   alt="Add Company Icon"
                   onClick={this.toggleEdit}
                 />
@@ -279,7 +361,7 @@ const Edit = styled.button`
   }
 `;
 
-const AddCompanyIcon = styled.img`
+const AddIcon = styled.img`
   cursor: pointer;
   transition: all 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
 

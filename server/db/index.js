@@ -8,7 +8,8 @@ const pool = mysql.createPool({
   user: "root",
   database: "roga_kopyta",
   host: "localhost",
-  port: 3306
+  port: 3306,
+  charset: "utf8_general_ci"
 });
 
 let db = {};
@@ -16,6 +17,7 @@ let db = {};
 // Запросы / Queries
 db.getAllRepresentatives = _ => {
   return new Promise((resolve, reject) => {
+    const perPage = 4;
     pool.query("SELECT * FROM representatives", (err, results) => {
       if (err) {
         console.error(chalk.red.bold(`\n${err}`));
